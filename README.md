@@ -10,15 +10,14 @@ Pyspark implementation of [Scalable Simple Random Sampling Algorithm](http://pro
 ## SRS sampling in pyspark
 
 ```python
-sc.addPyFile('yelp_sampling/srs_sampling.py')
-from srs_sampling import sample_train_test_split 
+from yelp_sampling.scalable_srs import scalable_srs
 
-sample_train_test_split(sc, 
-train_size, 
-test_size, 
-'s3 location of samples', 
-'s3 bucket to dump training samples', 
-'s3 bucket to dump test samples')
+rdd = sc.textFile(<path>)
+sampled_rdd = scalable_srs(rdd, {
+  'train': 10000000,
+  'validation': 1000000,
+  'test': 5000000,
+})
 ```
 
 
